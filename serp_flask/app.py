@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 import sqlite3
 import time
 from datetime import datetime
+import random
 
 
 app = Flask(__name__)
@@ -35,17 +36,27 @@ def index():
     if request.method == 'POST':
         query = request.form['query']
         options = Options()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
+        # Mimic human browser
+        options.add_argument("start-maximized")
+        options.add_argument("disable-infobars")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/113.0.0.0 Safari/537.36")
+
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-logging")
+        options.add_argument("--disable-gpu")
         driver = webdriver.Chrome(options=options)
         
         driver.get("https://www.google.com/")
-        search_box = driver.find_element(By.Name, "q")
+        search_box = driver.find_element(By.NAME, "q")
         search_box.send_keys(query)
         search_box.send_keys(Keys.RETURN)
-        time.sleep(2)
+        # time.sleep(2)
+        time.sleep(random.uniform(1.5, 3.0))
         
         links = driver.find_elements(By.XPATH, "//div[@class='yuRubf']/a")[:8]
-        now = datetime.now().strftime('%Y-%m-%d %H:%M:%s')
+        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         conn = sqlite3.connect(DB)
         c = conn.cursor()
