@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Flask SERP Scraper</title></head>
+<body>
+    <h1>Enter Google Search Term</h1>
+    <form method="POST">
+        <input type="text" name="query" placeholder="Search Google..." required>
+        <button type="submit">Scrape</button>
+    </form>
+
+    {% if results %}
+        <h2>Top 8 Results</h2>
+        <ul>
+            {% for text, link in results %}
+                <li><a href="{{ link }}" target="_blank">{{ text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
