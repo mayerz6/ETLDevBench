@@ -1,7 +1,7 @@
 import sqlite3
 from tabulate import tabulate
 
-DB = 'scraper.db'
+DB = '../scraper.db'
 
 def view_results():
     conn = sqlite3.connect(DB)

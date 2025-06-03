@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 
 app = Flask(__name__)
-DB = 'scraper.db'
+DB = '../scraper.db'
 
 def init_db():
     conn = sqlite3.connect(DB)
